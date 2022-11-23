@@ -36,7 +36,11 @@ class Extract:
         ingr = {}
 
         for count in range(15):
-            ingr[ data.json()['drinks'][0]['strIngredient' + str(count + 1)] ] = data.json()['drinks'][0]['strMeasure' + str(count + 1)]
+            if data.json()['drinks'][0]['strIngredient' + str(count + 1)] is not None and data.json()['drinks'][0]['strMeasure' + str(count + 1)] is not None:
+                ingr[ data.json()['drinks'][0]['strIngredient' + str(count + 1)] ] = data.json()['drinks'][0]['strMeasure' + str(count + 1)]
+
+        print("INGR")
+        print(ingr)
 
         date:datetime.date = None
         if data.json()['drinks'][0]['dateModified'] is not None:
