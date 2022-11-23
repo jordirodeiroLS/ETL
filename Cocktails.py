@@ -17,7 +17,6 @@ class Cocktail:
     dateModified: datetime.date
 
 
-
 # ['idDrink', 'strDrink', 'strDrinkAlternate', 'strTags', 'strVideo', 'strCategory', 
 # 'strIBA', 'strAlcoholic', 'strGlass', 'strInstructions', 'strInstructionsES', 
 # 'strInstructionsDE', 'strInstructionsFR', 'strInstructionsIT', 'strInstructionsZH-HANS', 

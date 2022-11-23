@@ -3,10 +3,11 @@ import Constants
 from Cocktails import Cocktail
 from pip._vendor import requests
 import datetime
+from typing import List
 
 class Extract:
 
-    def extract_data(self):
+    def extract_data(self) -> List[Cocktail]:
 
         print("Data extraction function")
 
@@ -28,6 +29,8 @@ class Extract:
 
         return self.cocktails
 
+# TODO: Add cache of the API information (save to file)
+
     def create_cocktail(self, data) -> Cocktail:
 
         ingr = {}
@@ -35,7 +38,9 @@ class Extract:
         for count in range(15):
             ingr[ data.json()['drinks'][0]['strIngredient' + str(count + 1)] ] = data.json()['drinks'][0]['strMeasure' + str(count + 1)]
 
-        date = datetime.datetime.strptime(data.json()['drinks'][0]['dateModified'], '%Y-%m-%d %H:%M:%S' ) or datetime.today()
+        date:datetime.date = None
+        if data.json()['drinks'][0]['dateModified'] is not None:
+            date = datetime.datetime.strptime(data.json()['drinks'][0]['dateModified'], '%Y-%m-%d %H:%M:%S' )
         #date = datetime.datetime.strptime( '1996-12-23 15:32:45' , '%Y-%m-%d %H:%M:%S' )
 
         cocktail = Cocktail( 
@@ -50,14 +55,3 @@ class Extract:
             ingr,
             date)
         return cocktail
-
-# ['idDrink', 'strDrink', 'strDrinkAlternate', 'strTags', 'strVideo', 'strCategory', 
-# 'strIBA', 'strAlcoholic', 'strGlass', 'strInstructions', 'strInstructionsES', 
-# 'strInstructionsDE', 'strInstructionsFR', 'strInstructionsIT', 'strInstructionsZH-HANS', 
-# 'strInstructionsZH-HANT', 'strDrinkThumb', 'strIngredient1', 'strIngredient2', 
-# 'strIngredient3', 'strIngredient4', 'strIngredient5', 'strIngredient6', 'strIngredient7', 
-# 'strIngredient8', 'strIngredient9', 'strIngredient10', 'strIngredient11', 'strIngredient12', 
-# 'strIngredient13', 'strIngredient14', 'strIngredient15', 'strMeasure1', 'strMeasure2', 
-# 'strMeasure3', 'strMeasure4', 'strMeasure5', 'strMeasure6', 'strMeasure7', 'strMeasure8', 
-# 'strMeasure9', 'strMeasure10', 'strMeasure11', 'strMeasure12', 'strMeasure13', 'strMeasure14', 
-# 'strMeasure15', 'strImageSource', 'strImageAttribution', 'strCreativeCommonsConfirmed', 'dateModified']
