@@ -56,7 +56,7 @@ class Transform:
 
         return self.filter_by_structure(ingredients)
 
-
+# TODO: potentially store transformed data in Transform and generate getters for controller
 
 # ------------------------------------NOT USED--------------------------------------
 
