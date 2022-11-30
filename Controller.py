@@ -42,6 +42,8 @@ class Controller:
 
         self.load.load_to_csv(self.ingredients, ["Ingredients", "Amount of Cocktails"], 'cocktails_by_ingredient.csv')
 
+    # TODO: Create graphics and Show class
+
     def execute(self):
         print("This is the main function.")
 
@@ -54,7 +56,6 @@ class Controller:
         self._transform()
 
         self._load()
-
 
 ETL = Controller()
 ETL.execute()
