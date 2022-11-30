@@ -6,7 +6,7 @@ class Load:
 
     def load_to_csv(self, data:Dict[str, int], headers: List[str], filename:str) -> None:
 
-        with open(filename, 'w', newline='') as file:
+        with open("data/" + filename, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(headers)
             for category, amount in data.items():

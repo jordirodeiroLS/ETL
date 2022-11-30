@@ -6,3 +6,9 @@ ADD . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
 CMD python Controller.py
+
+# TODO: create volume
+# TODO: Add stuff to requirements.txt
+
+# Docker command:
+# docker run -it --rm --name etl_v1 --volume "$(pwd)/data:/app/data" etl:1.0
