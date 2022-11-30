@@ -1,5 +1,6 @@
 
 import matplotlib.pyplot as plt
+import Constants
 
 class Show:
 
@@ -7,9 +8,8 @@ class Show:
 
         fig = plt.figure(figsize=(30,10))
         plt.bar(data.keys(), data.values())
-        #plt.xticks()
-        plt.xlabel(x_data, fontweight='bold', fontsize=20)
-        plt.ylabel(y_data, fontweight='bold', fontsize=20)
-        # TODO: fontsize in constants.py
-        plt.title(title, fontweight='bold', fontsize=20)
+        plt.xticks(fontsize=Constants.LABELS_FONT_SIZE, rotation = 45)
+        plt.xlabel(x_data, fontweight='bold', fontsize=Constants.AXIS_FONT_SIZE)
+        plt.ylabel(y_data, fontweight='bold', fontsize=Constants.AXIS_FONT_SIZE)
+        plt.title(title, fontweight='bold', fontsize=Constants.TITLE_FONT_SIZE)
         plt.savefig("data/" + title + '.png')
