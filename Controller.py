@@ -2,6 +2,7 @@
 from Extract import Extract
 from Transform import Transform
 from Load import Load
+from Show import Show
 
 from Cocktails import Cocktail
 from typing import List
@@ -42,7 +43,19 @@ class Controller:
 
         self.load.load_to_csv(self.ingredients, ["Ingredients", "Amount of Cocktails"], 'cocktails_by_ingredient.csv')
 
-    # TODO: Create graphics and Show class
+    def _create_visuals(self):
+
+        self.show = Show()
+
+        self.show.histogram(self.category, "Cocktails by category", "Category", "Amount of cocktails")
+
+        self.show.histogram(self.alcoholic, "Cocktails by alcoholic", "Alcoholic", "Amount of cocktails")
+
+        self.show.histogram(self.glass, "Cocktails by glass", "Glass", "Amount of cocktails")
+
+        self.show.histogram(self.ingredients, "Cocktails by ingredient", "Ingredients", "Amount of cocktails")
+
+        pass
 
     def execute(self):
         print("This is the main function.")
@@ -56,6 +69,8 @@ class Controller:
         self._transform()
 
         self._load()
+
+        self._create_visuals()
 
 ETL = Controller()
 ETL.execute()
