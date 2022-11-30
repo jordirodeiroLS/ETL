@@ -1,7 +1,8 @@
 FROM python:3.8-slim
 RUN apt-get update && apt-get -y install \
-    git \
+    pip \
     && rm -rf /var/lib/apt/lists/*
+RUN pip install --upgrade pip
 ADD . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
