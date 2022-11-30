@@ -11,4 +11,5 @@ CMD python Controller.py
 # TODO: Add stuff to requirements.txt
 
 # Docker command:
+# docker build -t etl:1.0 .
 # docker run -it --rm --name etl_v1 --volume "$(pwd)/data:/app/data" etl:1.0
