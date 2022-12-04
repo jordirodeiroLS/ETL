@@ -1,0 +1,20 @@
+
+version: "3.9"
+services:
+  etl_app:
+    # image: etl:1.0
+    # command: python Controller.py
+    build: "./etl_service"
+    ports:
+      - "5001:80"
+    #working_dir: /app
+    volumes:
+      - "./etl_service/data:/app/data"
+  web:
+    image: "php:apache"
+    ports:
+      - "5000:80"
+    volumes:
+      - "./web_service:/var/www/html"
+
+# docker compose up / (down --volume)
