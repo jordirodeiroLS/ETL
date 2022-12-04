@@ -37,7 +37,7 @@ class Extract:
 
         for count in range(15):
             if data.json()['drinks'][0]['strIngredient' + str(count + 1)] is not None and data.json()['drinks'][0]['strMeasure' + str(count + 1)] is not None:
-                ingr[ data.json()['drinks'][0]['strIngredient' + str(count + 1)] ] = data.json()['drinks'][0]['strMeasure' + str(count + 1)]
+                ingr[ data.json()['drinks'][0]['strIngredient' + str(count + 1)].replace(" ", "_") ] = data.json()['drinks'][0]['strMeasure' + str(count + 1)]
 
         print("INGR")
         print(ingr)
@@ -49,11 +49,11 @@ class Extract:
 
         cocktail = Cocktail( 
             data.json()['drinks'][0]['idDrink'],
-            data.json()['drinks'][0]['strDrink'],
-            data.json()['drinks'][0]['strCategory'],
+            data.json()['drinks'][0]['strDrink'].replace(" ", "_"),
+            data.json()['drinks'][0]['strCategory'].replace(" ", "_"),
             data.json()['drinks'][0]['strIBA'],
-            data.json()['drinks'][0]['strAlcoholic'],
-            data.json()['drinks'][0]['strGlass'],
+            data.json()['drinks'][0]['strAlcoholic'].replace(" ", "_"),
+            data.json()['drinks'][0]['strGlass'].replace(" ", "_"),
             data.json()['drinks'][0]['strInstructions'],
             data.json()['drinks'][0]['strDrinkThumb'],
             ingr,
