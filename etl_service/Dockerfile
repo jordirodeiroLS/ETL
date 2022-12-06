@@ -7,7 +7,7 @@ ADD . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
 #CMD python Controller.py
-CMD python Application.py
+CMD python Controller.py
 
 # TODO: create volume
 # TODO: Add stuff to requirements.txt

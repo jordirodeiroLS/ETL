@@ -7,9 +7,19 @@ from Show import Show
 from Cocktails import Cocktail
 from typing import List
 
-import time
+# Import framework
+from flask import Flask
+from flask import send_file
+from flask_restful import Resource, Api
 
-class Controller:
+import mimetypes
+
+# Instantiate the app
+app = Flask(__name__)
+api = Api(app)
+
+
+class Controller(Resource):
 
     cocktails: List[Cocktail]
 
@@ -17,7 +27,6 @@ class Controller:
         self.extract = Extract()
 
         self.cocktails = self.extract.extract_data()
-        print(self.cocktails[0].strDrink)
 
     def _transform(self) -> None:        
         self.transform = Transform( self.cocktails )
@@ -51,7 +60,6 @@ class Controller:
         self.load.append_to_csv(self.glass, ["Glass&", "Amount_of_Cocktails"], 'complete_info.csv', 'a')
         self.load.append_to_csv(self.ingredients, ["Ingredients&", "Amount_of_Cocktails"], 'complete_info.csv', 'a')
 
-
     def _create_visuals(self):
 
         self.show = Show()
@@ -66,7 +74,7 @@ class Controller:
 
         pass
 
-    def execute(self):
+    def get(self):
         print("This is the main function.")
 
         self._extract()
@@ -81,6 +89,15 @@ class Controller:
 
         self._create_visuals()
 
-#ETL = Controller()
-#ETL.execute()
-#time.sleep(1000)
+        filename = "data/complete_info.csv"
+        mime = mimetypes.MimeTypes().guess_type(filename)[0]
+        print(mime)
+        return send_file(filename, mimetype = mime)
+
+
+# Create routes
+api.add_resource(Controller, '/')
+
+# Run the application
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80, debug=True)
