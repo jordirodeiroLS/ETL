@@ -8,7 +8,7 @@ import json
 
 class Database:
 
-    def get_information_db_cocktails(self) -> List[ Dict[Cocktail] ]:
+    def get_information_db_cocktails(self):
         mydb = mysql.connector.connect(
             host="db",
             user="root",
@@ -30,7 +30,7 @@ class Database:
 
         return json_data
 
-    def get_information_db_ingredients(self) -> List[ Dict[int, str, str] ]:
+    def get_information_db_ingredients(self):
         mydb = mysql.connector.connect(
             host="db",
             user="root",
@@ -67,7 +67,8 @@ class Database:
         )
 
         for cocktail in data:
-            data_insert = (cocktail.idDrink,cocktail.strDrink,cocktail.strCategory, cocktail.strIBA, cocktail.strAlcoholic, cocktail.strGlass, cocktail.strImage, cocktail.dateModified)
+            data_insert = (cocktail.idDrink,cocktail.strDrink,cocktail.strCategory, cocktail.strIBA, cocktail.strAlcoholic, 
+                cocktail.strGlass, cocktail.strImage, cocktail.dateModified)
             cursor.execute(insert_stmt, data_insert)
 
         mydb.commit()
