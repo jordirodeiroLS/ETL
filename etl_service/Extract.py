@@ -5,31 +5,65 @@ from pip._vendor import requests
 import datetime
 from typing import List
 
+from Database import Database
+
 class Extract:
 
     def extract_data(self) -> List[Cocktail]:
 
         print("Data extraction function")
 
-        self.cocktails=[]
+        self.cocktails : List[Cocktail] = []
+
+        self.database = Database()
+        new = self.database.first_init()
+        self.database.connect_db()
+        aux_cocktails = self.database.get_information_db_cocktails()
+        aux_ingredients = self.database.get_information_db_ingredients()
+
+        if new is False:
+            # TODO transform to cocktails
+            self.dict_to_cocktails(aux_cocktails, aux_ingredients)
+            return self.cocktails
 
         for _ in range(Constants.NUM_COCKTAILS):
 
             data = requests.get(url=Constants.API_URL)
-
-            # print(data.json().keys()) # ['drinks']
-            # print( type(data.json()['drinks']) ) # list
-            # print( type(data.json()['drinks'][0]) ) # dict
-            # print( data.json()['drinks'][0] ) # actual keys
             
             if (data.raise_for_status() is None):
                 print("Obtained data")
                 cocktail = self.create_cocktail(data)
                 self.cocktails.append(cocktail)
 
+        self.database.fill_db(self.cocktails)
+
         return self.cocktails
 
-# TODO: Add cache of the API information (save to file)
+    def dict_to_cocktails(self, cocktails, ingredients):
+
+        for item in cocktails:
+
+            aux_ingredients = {}
+
+            for ingr in ingredients:
+                if ingr['idDrink'] == item['idDrink']:
+                    aux_ingredients[ ingr["ingredient"] ] = ingr["quantity"]
+
+            cocktail = Cocktail( 
+                item['idDrink'],
+                item['strDrink'].replace(" ", "_"),
+                item['strCategory'].replace(" ", "_"),
+                item['strIBA'],
+                item['strAlcoholic'].replace(" ", "_"),
+                item['strGlass'].replace(" ", "_"),
+                "",
+                item['strImage'],
+                aux_ingredients,
+                item['dateModified']
+            )
+
+            self.cocktails.append(cocktail)
+
 
     def create_cocktail(self, data) -> Cocktail:
 
@@ -45,7 +79,6 @@ class Extract:
         date:datetime.date = None
         if data.json()['drinks'][0]['dateModified'] is not None:
             date = datetime.datetime.strptime(data.json()['drinks'][0]['dateModified'], '%Y-%m-%d %H:%M:%S' )
-        #date = datetime.datetime.strptime( '1996-12-23 15:32:45' , '%Y-%m-%d %H:%M:%S' )
 
         cocktail = Cocktail( 
             data.json()['drinks'][0]['idDrink'],
