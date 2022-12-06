@@ -56,7 +56,7 @@ class Controller(Resource):
         self.load.append_to_csv(self.glass, ["Glass&", "Amount_of_Cocktails"], 'complete_info.csv', 'a')
         self.load.append_to_csv(self.ingredients, ["Ingredients&", "Amount_of_Cocktails"], 'complete_info.csv', 'a')
 
-    def _create_visuals(self):
+    def _create_visuals(self) -> None:
 
         self.show = Show()
 
@@ -67,8 +67,6 @@ class Controller(Resource):
         self.show.histogram(self.glass, "Cocktails_by_glass", "Glass", "Amount_of_cocktails")
 
         self.show.histogram(self.ingredients, "Cocktails_by_ingredient", "Ingredients", "Amount_of_cocktails")
-
-        pass
 
     def get(self):
 
