@@ -4,7 +4,6 @@ services:
     build: "./etl_service"
     ports:
       - "5001:80"
-    #working_dir: /app
     volumes:
       - "./etl_service/data:/app/data"
     environment:

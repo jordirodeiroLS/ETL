@@ -55,33 +55,3 @@ class Transform:
             ingredients = ingredients + keysList
 
         return self.filter_by_structure(ingredients)
-
-# TODO: potentially store transformed data in Transform and generate getters for controller
-
-# ------------------------------------NOT USED--------------------------------------
-
-    # Group by "strCategory" --> Not used
-    def __filter_by_category(self) -> Dict[str, int]:
-
-        category: Dict[str, int] = {}
-
-        for cocktail in self.cocktails:
-            if cocktail.strCategory in category:
-                category[cocktail.strCategory] += 1
-            else:
-                category[cocktail.strCategory] = 1
-
-        return category
-
-    # Group by strAlcoholic
-    def __filter_by_alcohol(self) -> Dict[str, int]:
-
-        alcoholic: Dict[str, int] = {}
-
-        for cocktail in self.cocktails:
-            if cocktail.strAlcoholic in alcoholic:
-                alcoholic[cocktail.strAlcoholic] += 1
-            else:
-                alcoholic[cocktail.strAlcoholic] = 1
-
-        return alcoholic

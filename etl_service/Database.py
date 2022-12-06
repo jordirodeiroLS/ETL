@@ -1,16 +1,14 @@
 import sqlalchemy as db
 
 from Cocktails import Cocktail
-from typing import List
+from typing import List, Dict
 
 import mysql.connector
 import json
 
 class Database:
 
-# TODO: Return type
-
-    def get_information_db_cocktails(self):
+    def get_information_db_cocktails(self) -> List[ Dict[Cocktail] ]:
         mydb = mysql.connector.connect(
             host="db",
             user="root",
@@ -21,9 +19,7 @@ class Database:
 
         cursor.execute("SELECT * FROM cocktails")
 
-        # TODO insert ingredients
-
-        row_headers=[x[0] for x in cursor.description] #this will extract row headers
+        row_headers=[x[0] for x in cursor.description]
 
         results = cursor.fetchall()
         json_data=[]
@@ -32,12 +28,9 @@ class Database:
 
         cursor.close()
 
-        #return json.dumps(json_data)
-        #if len(json_data) != 0:
-        #    return json_data[0]
         return json_data
 
-    def get_information_db_ingredients(self):
+    def get_information_db_ingredients(self) -> List[ Dict[int, str, str] ]:
         mydb = mysql.connector.connect(
             host="db",
             user="root",

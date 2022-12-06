@@ -32,16 +32,12 @@ class Controller(Resource):
         self.transform = Transform( self.cocktails )
 
         self.category = self.transform.filter_by_category()
-        print(self.category)
 
         self.alcoholic = self.transform.filter_by_alcoholic()
-        print(self.alcoholic)
 
         self.glass = self.transform.filter_by_glass()
-        print(self.glass)
 
         self.ingredients = self.transform.filter_by_ingredients()
-        print(self.ingredients)
 
     def _load(self) -> None:
         self.load = Load()
@@ -75,7 +71,6 @@ class Controller(Resource):
         pass
 
     def get(self):
-        print("This is the main function.")
 
         self._extract()
 
@@ -91,7 +86,7 @@ class Controller(Resource):
 
         filename = "data/complete_info.csv"
         mime = mimetypes.MimeTypes().guess_type(filename)[0]
-        print(mime)
+        
         return send_file(filename, mimetype = mime)
 
 

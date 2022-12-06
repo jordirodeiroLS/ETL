@@ -11,8 +11,6 @@ class Extract:
 
     def extract_data(self) -> List[Cocktail]:
 
-        print("Data extraction function")
-
         self.cocktails : List[Cocktail] = []
 
         self.database = Database()
@@ -22,7 +20,6 @@ class Extract:
         aux_ingredients = self.database.get_information_db_ingredients()
 
         if new is False:
-            # TODO transform to cocktails
             self.dict_to_cocktails(aux_cocktails, aux_ingredients)
             return self.cocktails
 
@@ -31,7 +28,6 @@ class Extract:
             data = requests.get(url=Constants.API_URL)
             
             if (data.raise_for_status() is None):
-                print("Obtained data")
                 cocktail = self.create_cocktail(data)
                 self.cocktails.append(cocktail)
 
@@ -64,7 +60,6 @@ class Extract:
 
             self.cocktails.append(cocktail)
 
-
     def create_cocktail(self, data) -> Cocktail:
 
         ingr = {}
@@ -72,9 +67,6 @@ class Extract:
         for count in range(15):
             if data.json()['drinks'][0]['strIngredient' + str(count + 1)] is not None and data.json()['drinks'][0]['strMeasure' + str(count + 1)] is not None:
                 ingr[ data.json()['drinks'][0]['strIngredient' + str(count + 1)].replace(" ", "_") ] = data.json()['drinks'][0]['strMeasure' + str(count + 1)]
-
-        print("INGR")
-        print(ingr)
 
         date:datetime.date = None
         if data.json()['drinks'][0]['dateModified'] is not None:
