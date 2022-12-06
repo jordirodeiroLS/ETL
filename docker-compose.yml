@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  etl_app:
+    build: "./etl_service"
+    ports:
+      - "5001:80"
+    volumes:
+      - "./etl_service/data:/app/data"
+    environment:
+      MYSQL_PORT: 3307
+  web:
+    image: "php:apache"
+    ports:
+      - "5000:80"
+    volumes:
+      - "./web_service:/var/www/html"
+  db:
+    image: mysql:8.0
+    hostname: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3307:3306'
+    #volumes:
+    #  - ./mysql_service:/var/lib/mysql
+
+
+# mysql information -p password
+# docker compose up / (down --volume)
